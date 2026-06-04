@@ -1,0 +1,195 @@
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.title {
+  font-size: 2.2rem;
+  color: var(--botanical);
+  margin-bottom: 24px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Shipping Details Form */
+.sectionCard {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--botanical);
+  border-bottom: 2px solid var(--botanical-light);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Payment Grid Options */
+.paymentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .paymentGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.paymentCard {
+  border: 2px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  background-color: white;
+  transition: var(--transition-fast);
+}
+
+.paymentCard:hover {
+  border-color: var(--primary);
+}
+
+.paymentCardActive {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.paymentIcon {
+  font-size: 2rem;
+}
+
+.paymentLabel {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+.paymentDesc {
+  font-size: 0.8rem;
+  color: var(--foreground-light);
+  text-align: center;
+}
+
+/* Summary Panel items mini list */
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 16px;
+}
+
+.itemMini {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.itemQtyPrice {
+  font-size: 0.8rem;
+  color: var(--foreground-light);
+}
+
+.itemTotal {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+/* Order Summary section */
+.summaryCard {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--foreground-light);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--foreground);
+  border-top: 1px solid var(--card-border);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+.totalPrice {
+  color: var(--primary);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.errorBox {
+  background-color: rgba(229, 57, 53, 0.08);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 12px 18px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 16px;
+}
