@@ -1,0 +1,98 @@
+.wrapper {
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.successIcon {
+  background-color: var(--botanical-light);
+  color: var(--success);
+}
+
+.errorIcon {
+  background-color: rgba(229, 57, 53, 0.08);
+  color: var(--error);
+}
+
+.statusTitle {
+  font-size: 1.8rem;
+  font-family: var(--font-serif);
+  color: var(--botanical);
+}
+
+.statusMessage {
+  color: var(--foreground-light);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.detailsBlock {
+  width: 100%;
+  background-color: white;
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-sm);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--botanical-light);
+  padding-bottom: 8px;
+}
+
+.detailRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.label {
+  color: var(--foreground-light);
+  font-weight: 500;
+}
+
+.value {
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  text-align: center;
+}

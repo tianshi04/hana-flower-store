@@ -1,0 +1,216 @@
+.wrapper {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.title {
+  font-size: 2.2rem;
+  color: var(--botanical);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--foreground-light);
+  margin-bottom: 40px;
+}
+
+.successBanner {
+  background-color: var(--botanical-light);
+  border: 1px solid var(--success);
+  color: var(--success);
+  padding: 16px 20px;
+  border-radius: var(--border-radius-md);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Orders List */
+.ordersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.orderCard {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: var(--transition-fast);
+}
+
+.orderCard:hover {
+  border-color: rgba(var(--primary-rgb), 0.15);
+}
+
+.orderHeader {
+  background-color: var(--botanical-light);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.orderMeta {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metaLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--foreground-light);
+  letter-spacing: 0.05em;
+}
+
+.metaValue {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--botanical);
+}
+
+/* Status Badge styling */
+.statusBadge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: var(--border-radius-full);
+}
+
+.statusPending {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.statusProcessing {
+  background-color: hsl(200, 100%, 96%);
+  color: hsl(200, 80%, 40%);
+}
+
+.statusShipping {
+  background-color: hsl(40, 100%, 95%);
+  color: hsl(40, 90%, 45%);
+}
+
+.statusDelivered {
+  background-color: hsl(142, 40%, 92%);
+  color: var(--success);
+}
+
+.statusCancelled {
+  background-color: rgba(229, 57, 53, 0.08);
+  color: var(--error);
+}
+
+/* Order Details Body */
+.orderBody {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .orderBody {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itemRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.imgWrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--botanical-light);
+}
+
+.itemImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.itemMeta {
+  font-size: 0.8rem;
+  color: var(--foreground-light);
+}
+
+/* Shipping and card message summaries */
+.deliveryInfo {
+  font-size: 0.9rem;
+  color: var(--foreground-light);
+  background-color: white;
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deliveryTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--botanical);
+  border-bottom: 1px solid var(--botanical-light);
+  padding-bottom: 6px;
+}
+
+.cardMessageBlock {
+  font-style: italic;
+  color: var(--primary);
+  border-top: 1px dashed var(--card-border);
+  padding-top: 10px;
+  margin-top: 4px;
+}
+
+.noOrders {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: var(--card-bg);
+  border: 1px dashed var(--card-border);
+  border-radius: var(--border-radius-md);
+  color: var(--foreground-light);
+}

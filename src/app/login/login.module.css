@@ -1,0 +1,82 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  background-image: radial-gradient(circle at 80% 20%, rgba(var(--primary-rgb), 0.05) 0%, transparent 50%);
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 40px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-family: var(--font-serif);
+  color: var(--botanical);
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--foreground-light);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.errorBox {
+  background-color: rgba(229, 57, 53, 0.08);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 10px 14px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.demoInfo {
+  font-size: 0.8rem;
+  color: var(--foreground-light);
+  background-color: var(--botanical-light);
+  padding: 16px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demoTitle {
+  font-weight: 600;
+  color: var(--botanical);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
