@@ -1,0 +1,162 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.optionSection {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--botanical);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Quantity Selector styling */
+.quantityContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.quantitySelector {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+  background-color: white;
+}
+
+.quantityBtn {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: var(--transition-fast);
+  color: var(--foreground-light);
+}
+
+.quantityBtn:hover {
+  background-color: var(--botanical-light);
+  color: var(--primary);
+}
+
+.quantityValue {
+  width: 40px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Delivery date/time layout */
+.deliveryGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .deliveryGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timeSlots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.timeSlotBtn {
+  padding: 10px 14px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--card-border);
+  background-color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.timeSlotBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.timeSlotBtnActive {
+  border-color: var(--primary);
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Greeting card inputs */
+.cardTextarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--card-border);
+  background-color: white;
+  min-height: 100px;
+  resize: vertical;
+  outline: none;
+  transition: var(--transition-fast);
+  font-size: 0.95rem;
+}
+.cardTextarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.cardSelect {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--card-border);
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Button & Alert */
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.successMessage {
+  background-color: var(--botanical-light);
+  border: 1px solid var(--success);
+  color: var(--success);
+  padding: 12px 18px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: fadeIn 0.4s ease;
+}
