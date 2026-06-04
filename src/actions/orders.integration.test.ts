@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
-import { createOrder } from "./orders";
+import { createOrder, handleVNPayCallback } from "./orders";
 import { PaymentMethod, PaymentStatus, OrderStatus } from "@prisma/client";
 
 // 1. Mock NextAuth to return a valid customer session
@@ -223,5 +223,139 @@ describe("Orders Server Actions Integration Tests (PostgreSQL Testcontainer)", (
     // Verify that the product stock remains 17 (no change)
     const product = await prisma.product.findUnique({ where: { id: productId } });
     expect(product?.stock).toBe(initialStock - 3);
+  });
+
+  it("should process a successful VNPay payment callback, updating order status to PAID and PROCESSING", async () => {
+    // 1. Create a VNPAY order first (current stock is 17)
+    const orderInput = {
+      recipientName: "Khách Thanh Toán Trực Tuyến",
+      recipientPhone: "0909998887",
+      deliveryAddress: "456 Kim Mã, Hà Nội",
+      deliveryDateStr: new Date(Date.now() + 86400000 * 3).toISOString(),
+      deliveryTime: "13:00 - 17:00",
+      paymentMethod: PaymentMethod.VNPAY,
+      items: [
+        {
+          productId: productId,
+          quantity: 2, // Deducts stock from 17 to 15
+        },
+      ],
+    };
+
+    const orderResult = await createOrder(orderInput, "127.0.0.1");
+    expect(orderResult.success).toBe(true);
+    expect(orderResult.paymentUrl).toBeDefined();
+    const orderId = orderResult.orderId!;
+
+    // 2. Generate a valid VNPay query payload
+    const testParams = {
+      vnp_Amount: (productPrice * 2 * 100).toString(),
+      vnp_Command: "pay",
+      vnp_CreateDate: "20260604160000",
+      vnp_CurrCode: "VND",
+      vnp_IpAddr: "127.0.0.1",
+      vnp_Locale: "vn",
+      vnp_OrderInfo: `Thanh toan don hang hoa ${orderId.slice(0, 8)}`,
+      vnp_OrderType: "other",
+      vnp_ReturnUrl: "http://localhost:3000/checkout/vnpay-return",
+      vnp_TmnCode: "2QXG2Y51",
+      vnp_TxnRef: orderId,
+      vnp_Version: "2.1.0",
+      vnp_ResponseCode: "00", // Success
+    };
+
+    const sortedKeys = Object.keys(testParams).sort() as Array<keyof typeof testParams>;
+    const signData = new URLSearchParams();
+    for (const key of sortedKeys) {
+      signData.append(key, testParams[key]);
+    }
+    const crypto = require("crypto");
+    const hmac = crypto.createHmac("sha512", "GET_YOURS_FROM_VNPAY");
+    const secureHash = hmac.update(Buffer.from(signData.toString(), "utf-8")).digest("hex");
+
+    const payload = {
+      ...testParams,
+      vnp_SecureHash: secureHash,
+    };
+
+    // 3. Process the callback action
+    const callbackResult = await handleVNPayCallback(payload);
+    expect(callbackResult.success).toBe(true);
+    expect(callbackResult.orderId).toBe(orderId);
+
+    // 4. Verify DB state updates
+    const updatedOrder = await prisma.order.findUnique({ where: { id: orderId } });
+    expect(updatedOrder?.paymentStatus).toBe(PaymentStatus.PAID);
+    expect(updatedOrder?.status).toBe(OrderStatus.PROCESSING);
+
+    // Verify stock remains 15 (paid successfully)
+    const product = await prisma.product.findUnique({ where: { id: productId } });
+    expect(product?.stock).toBe(15);
+  });
+
+  it("should process a failed VNPay payment callback, canceling the order and reverting product stock", async () => {
+    // 1. Create a VNPAY order first (current stock is 15)
+    const orderInput = {
+      recipientName: "Khách Thanh Toán Hủy",
+      recipientPhone: "0901112223",
+      deliveryAddress: "789 Hoàng Hoa Thám, Hà Nội",
+      deliveryDateStr: new Date(Date.now() + 86400000 * 3).toISOString(),
+      deliveryTime: "17:00 - 21:00",
+      paymentMethod: PaymentMethod.VNPAY,
+      items: [
+        {
+          productId: productId,
+          quantity: 5, // Deducts stock from 15 to 10
+        },
+      ],
+    };
+
+    const orderResult = await createOrder(orderInput, "127.0.0.1");
+    expect(orderResult.success).toBe(true);
+    const orderId = orderResult.orderId!;
+
+    // 2. Generate a failed VNPay query payload (vnp_ResponseCode is "24" - customer cancelled)
+    const testParams = {
+      vnp_Amount: (productPrice * 5 * 100).toString(),
+      vnp_Command: "pay",
+      vnp_CreateDate: "20260604160000",
+      vnp_CurrCode: "VND",
+      vnp_IpAddr: "127.0.0.1",
+      vnp_Locale: "vn",
+      vnp_OrderInfo: `Thanh toan don hang hoa ${orderId.slice(0, 8)}`,
+      vnp_OrderType: "other",
+      vnp_ReturnUrl: "http://localhost:3000/checkout/vnpay-return",
+      vnp_TmnCode: "2QXG2Y51",
+      vnp_TxnRef: orderId,
+      vnp_Version: "2.1.0",
+      vnp_ResponseCode: "24", // Failure/Cancelled
+    };
+
+    const sortedKeys = Object.keys(testParams).sort() as Array<keyof typeof testParams>;
+    const signData = new URLSearchParams();
+    for (const key of sortedKeys) {
+      signData.append(key, testParams[key]);
+    }
+    const crypto = require("crypto");
+    const hmac = crypto.createHmac("sha512", "GET_YOURS_FROM_VNPAY");
+    const secureHash = hmac.update(Buffer.from(signData.toString(), "utf-8")).digest("hex");
+
+    const payload = {
+      ...testParams,
+      vnp_SecureHash: secureHash,
+    };
+
+    // 3. Process the callback action
+    const callbackResult = await handleVNPayCallback(payload);
+    expect(callbackResult.success).toBe(false);
+
+    // 4. Verify DB state updates
+    const updatedOrder = await prisma.order.findUnique({ where: { id: orderId } });
+    expect(updatedOrder?.paymentStatus).toBe(PaymentStatus.UNPAID);
+    expect(updatedOrder?.status).toBe(OrderStatus.CANCELLED);
+
+    // Verify stock is reverted back from 10 to 15!
+    const product = await prisma.product.findUnique({ where: { id: productId } });
+    expect(product?.stock).toBe(15);
   });
 });
