@@ -123,7 +123,7 @@ export default async function Home() {
               />
               <div className={styles.occasionOverlay}>
                 <h3 className={styles.occasionTitle}>{occ.title}</h3>
-                <p className={occ.occasionDesc}>{occ.desc}</p>
+                <p className={styles.occasionDesc}>{occ.desc}</p>
               </div>
             </Link>
           ))}
