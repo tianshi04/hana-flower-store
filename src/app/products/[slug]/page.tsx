@@ -92,7 +92,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               id: product.id,
               name: product.name,
               slug: product.slug,
-              price: product.price,
+              price: Number(product.price),
               images: product.images,
               stock: product.stock,
             }}
