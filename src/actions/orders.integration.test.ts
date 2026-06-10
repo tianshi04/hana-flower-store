@@ -4,7 +4,8 @@ import { execSync } from "child_process";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
-import { createOrder, handleVNPayCallback } from "./orders";
+import { createOrder, handleVNPayCallback, getCustomerOrders, getOrderDetails, getAdminOrders, updateOrderStatus, updatePaymentStatus } from "./orders";
+import { auth } from "@/auth";
 import { PaymentMethod, PaymentStatus, OrderStatus } from "@prisma/client";
 
 // 1. Mock NextAuth to return a valid customer session
@@ -357,5 +358,141 @@ describe("Orders Server Actions Integration Tests (PostgreSQL Testcontainer)", (
     // Verify stock is reverted back from 10 to 15!
     const product = await prisma.product.findUnique({ where: { id: productId } });
     expect(product?.stock).toBe(15);
+  });
+
+  it("should fetch customer orders history", async () => {
+    const orders = await getCustomerOrders();
+    expect(orders).toBeDefined();
+    expect(orders.length).toBeGreaterThan(0);
+    orders.forEach((ord) => {
+      expect(ord.userId).toBe("test-customer-id-123");
+    });
+  });
+
+  it("should successfully retrieve order details for the owner", async () => {
+    // Find the first order created by this user
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    const details = await getOrderDetails(targetOrderId);
+    expect(details).not.toBeNull();
+    expect(details?.id).toBe(targetOrderId);
+    expect(details?.items).toBeDefined();
+  });
+
+  it("should throw unauthorized error when non-owner customer tries to retrieve order details", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    // Mock auth to return a different customer
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: {
+        id: "different-customer-id",
+        name: "Other Customer",
+        email: "other@example.com",
+        role: "CUSTOMER",
+      },
+    });
+
+    await expect(getOrderDetails(targetOrderId)).rejects.toThrow("Unauthorized access to order details.");
+  });
+
+  it("should allow an admin to retrieve any order details", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    // Mock auth to return an admin
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: {
+        id: "admin-user-id",
+        name: "Admin User",
+        email: "admin@example.com",
+        role: "ADMIN",
+      },
+    });
+
+    const details = await getOrderDetails(targetOrderId);
+    expect(details).not.toBeNull();
+    expect(details?.id).toBe(targetOrderId);
+  });
+
+  it("should throw unauthorized error when customer tries to retrieve admin orders list", async () => {
+    await expect(getAdminOrders()).rejects.toThrow("Unauthorized");
+  });
+
+  it("should allow admin to retrieve all orders in system", async () => {
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: {
+        id: "admin-user-id",
+        name: "Admin User",
+        email: "admin@example.com",
+        role: "ADMIN",
+      },
+    });
+
+    const allOrders = await getAdminOrders();
+    expect(allOrders).toBeDefined();
+    expect(allOrders.length).toBeGreaterThan(0);
+  });
+
+  it("should allow admin to update order status", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: {
+        id: "admin-user-id",
+        name: "Admin User",
+        email: "admin@example.com",
+        role: "ADMIN",
+      },
+    });
+
+    const updated = await updateOrderStatus(targetOrderId, OrderStatus.DELIVERED);
+    expect(updated.status).toBe(OrderStatus.DELIVERED);
+
+    const dbOrder = await prisma.order.findUnique({ where: { id: targetOrderId } });
+    expect(dbOrder?.status).toBe(OrderStatus.DELIVERED);
+  });
+
+  it("should throw unauthorized error when customer tries to update order status", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    await expect(updateOrderStatus(targetOrderId, OrderStatus.DELIVERED)).rejects.toThrow("Unauthorized");
+  });
+
+  it("should allow admin to update payment status", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    vi.mocked(auth).mockResolvedValueOnce({
+      user: {
+        id: "admin-user-id",
+        name: "Admin User",
+        email: "admin@example.com",
+        role: "ADMIN",
+      },
+    });
+
+    const updated = await updatePaymentStatus(targetOrderId, PaymentStatus.PAID);
+    expect(updated.paymentStatus).toBe(PaymentStatus.PAID);
+
+    const dbOrder = await prisma.order.findUnique({ where: { id: targetOrderId } });
+    expect(dbOrder?.paymentStatus).toBe(PaymentStatus.PAID);
+  });
+
+  it("should throw unauthorized error when customer tries to update payment status", async () => {
+    const orders = await prisma.order.findMany({ where: { userId: "test-customer-id-123" } });
+    expect(orders.length).toBeGreaterThan(0);
+    const targetOrderId = orders[0].id;
+
+    await expect(updatePaymentStatus(targetOrderId, PaymentStatus.PAID)).rejects.toThrow("Unauthorized");
   });
 });
