@@ -226,6 +226,26 @@ describe("Orders Server Actions Integration Tests (PostgreSQL Testcontainer)", (
     expect(product?.stock).toBe(initialStock - 3);
   });
 
+  it("should throw an error if greeting card message exceeds 250 characters", async () => {
+    const orderInput = {
+      recipientName: "Nguyễn Văn Nhận",
+      recipientPhone: "0901234567",
+      deliveryAddress: "123 Đường Láng, Hà Nội",
+      deliveryDateStr: new Date(Date.now() + 86400000 * 2).toISOString(),
+      deliveryTime: "09:00 - 11:00",
+      paymentMethod: PaymentMethod.COD,
+      cardMessage: "a".repeat(251), // 251 characters
+      items: [
+        {
+          productId: productId,
+          quantity: 1,
+        },
+      ],
+    };
+
+    await expect(createOrder(orderInput, "127.0.0.1")).rejects.toThrow("Lời nhắn trên thiệp chúc mừng không được vượt quá 250 ký tự.");
+  });
+
   it("should process a successful VNPay payment callback, updating order status to PAID and PROCESSING", async () => {
     // 1. Create a VNPAY order first (current stock is 17)
     const orderInput = {

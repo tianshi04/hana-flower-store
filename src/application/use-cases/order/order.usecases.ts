@@ -29,6 +29,10 @@ export class CreateOrderUseCase {
       throw new Error("Your cart is empty.");
     }
 
+    if (input.cardMessage && input.cardMessage.length > 250) {
+      throw new Error("Lời nhắn trên thiệp chúc mừng không được vượt quá 250 ký tự.");
+    }
+
     // 1. Get products from repository to check price and stock
     const productIds = input.items.map((item) => item.productId);
     const dbProducts = await Promise.all(
