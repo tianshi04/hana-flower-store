@@ -63,7 +63,7 @@ export class PrismaOrderRepository implements OrderRepository {
     return await db.$transaction(async (tx) => {
       // Decrease stock for each product
       for (const item of items) {
-        await tx.product.update({
+        const updatedProduct = await tx.product.update({
           where: { id: item.productId },
           data: {
             stock: {
@@ -71,6 +71,10 @@ export class PrismaOrderRepository implements OrderRepository {
             },
           },
         });
+
+        if (updatedProduct.stock < 0) {
+          throw new Error(`Sản phẩm "${updatedProduct.name}" không đủ hàng trong kho (Còn lại: ${updatedProduct.stock + item.quantity}).`);
+        }
       }
 
       // Create the order
