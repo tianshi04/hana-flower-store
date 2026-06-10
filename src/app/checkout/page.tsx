@@ -107,8 +107,9 @@ export default function CheckoutPage() {
         <div>
           {/* Shipping Form */}
           <div className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>
-              <span>📍</span> Thông Tin Giao Nhận Hoa
+            <h2 className={styles.sectionTitle} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--primary)" }}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+              Thông Tin Giao Nhận Hoa
             </h2>
 
             <div className="form-group">
@@ -150,8 +151,9 @@ export default function CheckoutPage() {
 
           {/* Delivery Review Details */}
           <div className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>
-              <span>📅</span> Xác nhận lịch giao & thiệp chúc
+            <h2 className={styles.sectionTitle} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--primary)" }}><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+              Xác nhận lịch giao & thiệp chúc
             </h2>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
               <div className="form-group">
@@ -202,8 +204,9 @@ export default function CheckoutPage() {
 
           {/* Payment Options Selection */}
           <div className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>
-              <span>💳</span> Phương Thức Thanh Toán
+            <h2 className={styles.sectionTitle} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--primary)" }}><rect x="1" y="4" width="22" height="16" rx="2" ry="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg>
+              Phương Thức Thanh Toán
             </h2>
 
             <div className={styles.paymentGrid}>
@@ -212,7 +215,9 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentMethod(PaymentMethod.COD)}
                 className={`${styles.paymentCard} ${paymentMethod === PaymentMethod.COD ? styles.paymentCardActive : ""}`}
               >
-                <span className={styles.paymentIcon}>💵</span>
+                <span className={styles.paymentIcon}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" /><circle cx="12" cy="12" r="2" /><path d="M6 12h.01M18 12h.01" /></svg>
+                </span>
                 <span className={styles.paymentLabel}>Thanh toán khi nhận (COD)</span>
                 <span className={styles.paymentDesc}>Cần Admin duyệt xác nhận đơn</span>
               </div>
@@ -222,7 +227,9 @@ export default function CheckoutPage() {
                 onClick={() => setPaymentMethod(PaymentMethod.VNPAY)}
                 className={`${styles.paymentCard} ${paymentMethod === PaymentMethod.VNPAY ? styles.paymentCardActive : ""}`}
               >
-                <span className={styles.paymentIcon}>🌐</span>
+                <span className={styles.paymentIcon}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
+                </span>
                 <span className={styles.paymentLabel}>Cổng VNPay (Thẻ/QR-Bank)</span>
                 <span className={styles.paymentDesc}>Thanh toán tự động qua VNPay</span>
               </div>
@@ -232,8 +239,9 @@ export default function CheckoutPage() {
 
         {/* 2. Right Column - Order Summary Panel */}
         <div className={styles.summaryCard}>
-          <h2 className={styles.sectionTitle} style={{ borderBottom: "none", marginBottom: 0 }}>
-            <span>🛒</span> Chi Tiết Đơn Hàng
+          <h2 className={styles.sectionTitle} style={{ borderBottom: "none", marginBottom: 0, display: "flex", alignItems: "center", gap: "8px" }}>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--primary)" }}><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
+            Chi Tiết Đơn Hàng
           </h2>
 
           <div className={styles.itemsList}>
@@ -268,7 +276,7 @@ export default function CheckoutPage() {
             disabled={isSubmitting}
             style={{ width: "100%", marginTop: "16px" }}
           >
-            {isSubmitting ? "Đang Xử Lý Đơn Hàng..." : paymentMethod === PaymentMethod.VNPAY ? "Thanh Toán Qua VNPay 💳" : "Xác Nhận Đặt Hàng (COD) 🛒"}
+            {isSubmitting ? "Đang Xử Lý Đơn Hàng..." : paymentMethod === PaymentMethod.VNPAY ? "Thanh Toán Qua VNPay" : "Xác Nhận Đặt Hàng (COD)"}
           </button>
 
           <Link

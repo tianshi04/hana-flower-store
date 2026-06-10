@@ -57,7 +57,7 @@
 }
 
 .quantityBtn:hover {
-  background-color: var(--botanical-light);
+  background-color: var(--primary-light);
   color: var(--primary);
 }
 

@@ -91,7 +91,7 @@ export default function ProductOrderForm({ product }: ProductOrderFormProps) {
       {/* 1. Quantity Selector */}
       <div className={styles.optionSection}>
         <h4 className={styles.sectionTitle}>
-          <span>🔢</span> Chọn Số Lượng
+          Chọn Số Lượng
         </h4>
         <div className={styles.quantityContainer}>
           <div className={styles.quantitySelector}>
@@ -122,7 +122,7 @@ export default function ProductOrderForm({ product }: ProductOrderFormProps) {
       {/* 2. Delivery Date and Time */}
       <div className={styles.optionSection}>
         <h4 className={styles.sectionTitle}>
-          <span>📅</span> Thời Gian Nhận Hoa
+          Thời Gian Nhận Hoa
         </h4>
         <div className={styles.deliveryGrid}>
           <div className="form-group">
@@ -160,7 +160,7 @@ export default function ProductOrderForm({ product }: ProductOrderFormProps) {
       <div className={styles.optionSection}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h4 className={styles.sectionTitle}>
-            <span>💌</span> Tặng Kèm Thiệp
+            Tặng Kèm Thiệp
           </h4>
           <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "0.9rem" }}>
             <input
@@ -213,7 +213,7 @@ export default function ProductOrderForm({ product }: ProductOrderFormProps) {
       {/* 4. Action Button and alert */}
       {isAdded && (
         <div className={styles.successMessage}>
-          <span>✔️</span> Đã thêm vào giỏ hàng! {" "}
+          Đã thêm vào giỏ hàng!{" "}
           <Link href="/cart" style={{ textDecoration: "underline", fontWeight: "600", color: "inherit" }}>
             Xem giỏ hàng ngay
           </Link>
@@ -225,7 +225,7 @@ export default function ProductOrderForm({ product }: ProductOrderFormProps) {
         className="btn btn-primary styles.submitBtn"
         disabled={product.stock <= 0}
       >
-        {product.stock > 0 ? "Thêm Vào Giỏ Hàng 🛒" : "Hết Hàng"}
+        {product.stock > 0 ? "Thêm Vào Giỏ Hàng" : "Hết Hàng"}
       </button>
     </form>
   );

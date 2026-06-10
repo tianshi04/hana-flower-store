@@ -139,7 +139,7 @@ export default async function ProductsPage({ searchParams }: PageProps) {
         <main className={styles.productsGrid}>
           {products.length > 0 ? (
             products.map((product) => (
-              <div key={product.id} className={styles.productCard}>
+              <Link key={product.id} href={`/products/${product.slug}`} className={styles.productCard}>
                 <div className={styles.imageWrapper}>
                   <img
                     className={styles.productImg}
@@ -154,16 +154,21 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                   <p className={styles.productDesc}>{product.description}</p>
                   <div className={styles.priceRow}>
                     <span className={styles.price}>{formatVND(product.price)}</span>
-                    <Link href={`/products/${product.slug}`} className={styles.detailBtn}>
+                    <span className={styles.detailBtn}>
                       Chi tiết
-                    </Link>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className={styles.noResults}>
-              <span className={styles.noResultsIcon}>🔍</span>
+              <span className={styles.noResultsIcon}>
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--foreground-light)", display: "block", margin: "0 auto 16px" }}>
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </span>
               <h3>Không tìm thấy sản phẩm</h3>
               <p>Thử điều chỉnh lại bộ lọc tìm kiếm hoặc xem các dịp khác.</p>
               <Link href="/products" className="btn btn-primary">

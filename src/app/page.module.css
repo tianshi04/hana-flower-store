@@ -1,103 +1,171 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+/* Homepage continuous scroll container */
+.homeWrapper {
+  width: 100%;
+  background-color: var(--background);
 }
 
-/* Hero Section */
-.hero {
+/* 1. Split Hero Section */
+.heroSection {
   position: relative;
-  background-color: var(--botanical);
-  color: white;
-  padding: 100px 24px;
-  overflow: hidden;
+  background-color: var(--background);
+  padding: 60px 24px 80px;
+}
+
+.heroContainer {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 80vh;
-  text-align: center;
+  justify-content: space-between;
+  gap: 48px;
 }
 
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(circle at 80% 20%, rgba(var(--primary-rgb), 0.15) 0%, transparent 50%),
-                    radial-gradient(circle at 10% 80%, rgba(67, 160, 71, 0.1) 0%, transparent 50%);
-  z-index: 1;
-}
-
-.heroContent {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
+.heroText {
+  width: 50%;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-start;
+  animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.tagline {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.25rem;
-  color: var(--secondary);
-  letter-spacing: 0.1em;
+.introBadge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 8px 18px;
+  border-radius: var(--border-radius-full);
+  margin-bottom: 24px;
+  border: 1px solid rgba(var(--primary-rgb), 0.12);
+  box-shadow: var(--shadow-sm);
 }
 
 .heroTitle {
-  font-size: 3.5rem;
-  line-height: 1.2;
-  font-family: var(--font-serif);
+  font-size: 3.6rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  line-height: 1.15;
+  color: var(--foreground);
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
 }
 
-@media (max-width: 768px) {
-  .heroTitle {
-    font-size: 2.5rem;
-  }
+.heroSubtitle {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--foreground-light);
+  margin-bottom: 36px;
+  max-width: 550px;
 }
 
-.heroDescription {
-  font-size: 1.1rem;
-  color: hsl(158, 20%, 85%);
-  max-width: 600px;
-  line-height: 1.7;
+.heroImageWrapper {
+  width: 45%;
+  aspect-ratio: 0.85;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  background-color: var(--primary-light);
+  animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.heroActions {
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
+.heroImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
 }
 
-/* Occasions Section */
-.section {
+.heroImageWrapper:hover .heroImg {
+  transform: scale(1.03);
+}
+
+/* 2. Brand Philosophy Section */
+.philosophySection {
+  background-color: var(--primary-light);
   padding: 80px 24px;
+  border-top: 1px solid rgba(var(--primary-rgb), 0.06);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.06);
+}
+
+.philosophyGrid {
   max-width: 1200px;
   margin: 0 auto;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.philosophyCard {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  padding: 36px 32px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: var(--transition-smooth);
+}
+
+.philosophyCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--primary-rgb), 0.1);
+}
+
+.philosophyIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  color: var(--primary);
+  border: 1px solid rgba(var(--primary-rgb), 0.08);
+}
+
+.philosophyTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 12px;
+}
+
+.philosophyDesc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--foreground-light);
+}
+
+/* 3. Occasions Section */
+.occasionsSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 90px 24px;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 56px;
 }
 
 .sectionTitle {
   font-size: 2.2rem;
-  text-align: center;
+  font-weight: 600;
+  color: var(--foreground);
   margin-bottom: 12px;
-  color: var(--botanical);
+  letter-spacing: -0.01em;
 }
 
-.sectionSubtitle {
-  text-align: center;
+.sectionDesc {
+  font-size: 1rem;
   color: var(--foreground-light);
-  margin-bottom: 48px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .occasionsGrid {
@@ -106,36 +174,33 @@
   gap: 24px;
 }
 
-@media (max-width: 900px) {
-  .occasionsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .occasionsGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .occasionCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: var(--border-radius-md);
   overflow: hidden;
-  position: relative;
-  height: 300px;
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
   transition: var(--transition-smooth);
 }
 
 .occasionCard:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--primary-rgb), 0.15);
 }
 
-.occasionBg {
-  position: absolute;
-  top: 0;
-  left: 0;
+.occasionImageWrapper {
+  width: 100%;
+  aspect-ratio: 1.1;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--primary-light);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.occasionCardBg {
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -143,58 +208,67 @@
   transition: var(--transition-smooth);
 }
 
-.occasionCard:hover .occasionBg {
-  transform: scale(1.1);
+.occasionCard:hover .occasionCardBg {
+  transform: scale(1.05);
 }
 
-.occasionOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.occasionCardContent {
   padding: 24px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-  color: white;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  flex-grow: 1;
 }
 
-.occasionTitle {
+.occasionCardTitle {
   font-size: 1.3rem;
   font-weight: 600;
-  color: white;
+  color: var(--foreground);
+  margin-bottom: 8px;
 }
 
-.occasionDesc {
+.occasionCardDesc {
   font-size: 0.85rem;
-  color: #ddd;
+  line-height: 1.5;
+  color: var(--foreground-light);
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
-/* Featured Products Section */
-.productsGrid {
+.occasionCardBtn {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: var(--transition-fast);
+  gap: 2px;
+}
+
+.occasionCard:hover .occasionCardBtn {
+  color: var(--primary-hover);
+  transform: translateX(4px);
+}
+
+/* 4. Products Section */
+.productsSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 90px 24px;
+  border-top: 1px solid var(--card-border);
+}
+
+.productsGridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-@media (max-width: 900px) {
-  .productsGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .productsGrid {
-    grid-template-columns: 1fr;
-  }
+  gap: 32px;
 }
 
 .productCard {
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  background-color: var(--card-bg);
+  background: var(--card-bg);
   border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-md);
+  padding: 20px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-smooth);
   display: flex;
@@ -202,187 +276,228 @@
 }
 
 .productCard:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--primary-rgb), 0.2);
 }
 
-.imageWrapper {
+.cardImageWrapper {
   position: relative;
-  height: 280px;
+  width: 100%;
+  aspect-ratio: 1.1;
+  border-radius: var(--border-radius-sm);
   overflow: hidden;
-  background-color: var(--botanical-light);
+  margin-bottom: 20px;
 }
 
-.productImg {
+.cardImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: var(--transition-smooth);
 }
 
-.productCard:hover .productImg {
-  transform: scale(1.08);
+.productCard:hover .cardImg {
+  transform: scale(1.05);
 }
 
-.tag {
+.cardBadge {
   position: absolute;
-  top: 16px;
-  left: 16px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: var(--botanical);
-  font-size: 0.75rem;
+  top: 12px;
+  left: 12px;
+  background-color: var(--glass-bg);
+  color: var(--primary);
   font-weight: 600;
-  padding: 6px 12px;
+  font-size: 0.75rem;
+  padding: 4px 12px;
   border-radius: var(--border-radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(4px);
 }
 
-.productInfo {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  gap: 12px;
-}
-
-.productTitle {
-  font-size: 1.15rem;
+.cardTitle {
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--foreground);
+  margin-bottom: 8px;
+  transition: var(--transition-fast);
 }
 
-.productDescription {
+.productCard:hover .cardTitle {
+  color: var(--primary);
+}
+
+.cardDesc {
   font-size: 0.9rem;
   color: var(--foreground-light);
   line-height: 1.5;
+  margin-bottom: 20px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  flex-grow: 1;
+  height: 2.7rem;
 }
 
-.priceRow {
+.cardFooter {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-top: 8px;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid var(--card-border);
+  padding-top: 16px;
 }
 
-.price {
-  font-size: 1.25rem;
+.cardPrice {
+  font-size: 1.3rem;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--foreground);
 }
 
-.detailBtn {
+.cardBtn {
   font-size: 0.85rem;
-  padding: 8px 16px;
+  font-weight: 600;
+  padding: 8px 20px;
   border-radius: var(--border-radius-full);
-  background-color: var(--botanical-light);
-  color: var(--botanical);
-  font-weight: 500;
-  transition: var(--transition-fast);
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  transition: var(--transition-smooth);
 }
 
-.productCard:hover .detailBtn {
+.productCard:hover .cardBtn {
   background-color: var(--primary);
   color: white;
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Features Section */
-.featuresBg {
-  background-color: var(--botanical-light);
-  width: 100%;
-}
-
-.featuresGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-
-@media (max-width: 768px) {
-  .featuresGrid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-}
-
-.featureCard {
+/* 5. Story Section */
+.storySection {
+  background-color: var(--primary-light);
+  border-top: 1px solid rgba(var(--primary-rgb), 0.08);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.08);
+  padding: 100px 24px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
 }
 
-.featureIcon {
-  font-size: 2.5rem;
-  width: 70px;
-  height: 70px;
-  border-radius: var(--border-radius-full);
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
-  color: var(--primary);
+.storyContent {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.featureTitle {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--botanical);
+.storyQuote {
+  font-size: 1.8rem;
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--foreground);
+  margin-bottom: 24px;
 }
 
-.featureDesc {
+.storyAuthor {
   font-size: 0.95rem;
-  color: var(--foreground-light);
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-/* Review section styles */
-.reviewsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-@media (max-width: 768px) {
-  .reviewsGrid {
-    grid-template-columns: 1fr;
+/* Animations */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-.reviewCard {
-  background-color: white;
-  border: 1px solid var(--card-border);
-  border-radius: var(--border-radius-md);
-  padding: 30px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .heroTitle {
+    font-size: 3rem;
+  }
+
+  .occasionsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .productsGridContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.rating {
-  color: var(--secondary);
-  font-size: 1.1rem;
-}
+@media (max-width: 768px) {
+  .heroContainer {
+    flex-direction: column;
+    gap: 36px;
+    padding-top: 20px;
+  }
 
-.comment {
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--foreground-light);
-  line-height: 1.6;
-}
+  .heroText {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
 
-.author {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--foreground);
+  .heroTitle {
+    font-size: 2.4rem;
+  }
+
+  .heroSubtitle {
+    text-align: center;
+  }
+
+  .heroImageWrapper {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .philosophyGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .philosophyCard {
+    align-items: center;
+    text-align: center;
+    padding: 28px;
+  }
+
+  .philosophyIcon {
+    margin-bottom: 16px;
+  }
+
+  .occasionsSection,
+  .productsSection {
+    padding: 60px 24px;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+
+  .occasionsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .occasionImageWrapper {
+    aspect-ratio: 1.3;
+  }
+
+  .occasionCardDesc {
+    min-height: auto;
+  }
+
+  .productsGridContainer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .storyQuote {
+    font-size: 1.4rem;
+  }
 }

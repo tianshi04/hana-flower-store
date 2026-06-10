@@ -1,8 +1,8 @@
 .footer {
-  background-color: var(--botanical);
-  color: hsl(158, 20%, 90%);
+  background-color: var(--primary-light);
+  color: var(--foreground-light);
   padding: 60px 24px 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(var(--primary-rgb), 0.1);
   margin-top: auto; /* Push footer to bottom */
 }
 
@@ -35,25 +35,33 @@
 }
 
 .logo {
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: white;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+}
+
 .description {
   font-size: 0.95rem;
-  color: hsl(158, 15%, 75%);
+  color: var(--foreground-light);
   line-height: 1.6;
 }
 
 .title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: white;
+  color: var(--primary);
   margin-bottom: 20px;
   position: relative;
 }
@@ -65,7 +73,7 @@
   left: 0;
   width: 30px;
   height: 2px;
-  background-color: var(--secondary);
+  background-color: var(--primary);
 }
 
 .links {
@@ -77,12 +85,12 @@
 
 .link {
   font-size: 0.95rem;
-  color: hsl(158, 15%, 75%);
+  color: var(--foreground-light);
   transition: var(--transition-fast);
 }
 
 .link:hover {
-  color: var(--secondary);
+  color: var(--primary);
   padding-left: 4px;
 }
 
@@ -91,21 +99,21 @@
   flex-direction: column;
   gap: 12px;
   font-size: 0.95rem;
-  color: hsl(158, 15%, 75%);
+  color: var(--foreground-light);
 }
 
 .bottom {
   max-width: 1200px;
   margin: 0 auto;
   padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(var(--primary-rgb), 0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
   font-size: 0.9rem;
-  color: hsl(158, 10%, 60%);
+  color: var(--foreground-light);
 }
 
 .copy {
@@ -119,10 +127,11 @@
 }
 
 .paymentBadge {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(var(--primary-rgb), 0.06);
   padding: 4px 10px;
   border-radius: var(--border-radius-sm);
   font-size: 0.75rem;
   font-weight: 600;
-  color: white;
+  color: var(--primary);
+  border: 1px solid rgba(var(--primary-rgb), 0.1);
 }

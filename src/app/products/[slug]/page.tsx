@@ -39,7 +39,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
     <div className={styles.wrapper}>
       {/* Back button */}
       <Link href="/products" className={styles.backBtn}>
-        <span>←</span> Quay lại danh sách hoa
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: "6px", display: "inline-block", verticalAlign: "middle" }}>
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Quay lại danh sách hoa
       </Link>
 
       <div className={styles.layout}>

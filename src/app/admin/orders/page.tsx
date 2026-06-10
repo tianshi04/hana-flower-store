@@ -58,9 +58,17 @@ export default async function AdminOrdersPage() {
                     <td className={styles.td} style={{ fontSize: "0.9rem" }}>
                       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
                         <strong>{order.recipientName} ({order.recipientPhone})</strong>
-                        <span>📍 {order.deliveryAddress}</span>
-                        <span style={{ fontSize: "0.75rem", color: "var(--botanical)", fontWeight: "600" }}>
-                          📅 Giao: {formatDate(order.deliveryDate)} ({order.deliveryTime})
+                        <span style={{ display: "flex", alignItems: "center" }}>
+                          <span className={styles.inlineIcon}>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                          </span>
+                          {order.deliveryAddress}
+                        </span>
+                        <span style={{ fontSize: "0.75rem", color: "var(--botanical)", fontWeight: "600", display: "flex", alignItems: "center" }}>
+                          <span className={styles.inlineIcon}>
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                          </span>
+                          Giao: {formatDate(order.deliveryDate)} ({order.deliveryTime})
                         </span>
                       </div>
                     </td>
@@ -81,8 +89,11 @@ export default async function AdminOrdersPage() {
                     <td className={styles.td} style={{ fontSize: "0.85rem" }}>
                       <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "4px" }}>
                         {order.items.map((item) => (
-                          <li key={item.id}>
-                            🌸 {item.product?.name || "Hoa tươi"} x <strong>{item.quantity}</strong>
+                          <li key={item.id} style={{ display: "flex", alignItems: "center" }}>
+                            <span className={styles.inlineIcon} style={{ color: "var(--primary)", marginRight: "6px" }}>
+                              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /></svg>
+                            </span>
+                            {item.product?.name || "Hoa tươi"} x <strong>{item.quantity}</strong>
                           </li>
                         ))}
                       </ul>
@@ -153,6 +164,9 @@ export default async function AdminOrdersPage() {
                             }}
                           >
                             <button type="submit" className={`${styles.actionBtn} ${styles.actionBtnConfirm}`}>
+                              <span className={styles.inlineIcon}>
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                              </span>
                               Xác nhận
                             </button>
                           </form>
@@ -167,7 +181,10 @@ export default async function AdminOrdersPage() {
                             }}
                           >
                             <button type="submit" className={styles.actionBtn} style={{ borderColor: "var(--secondary)", color: "var(--secondary)" }}>
-                              Giao hàng 🚗
+                              <span className={styles.inlineIcon}>
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
+                              </span>
+                              Giao hàng
                             </button>
                           </form>
                         )}
@@ -182,7 +199,10 @@ export default async function AdminOrdersPage() {
                             }}
                           >
                             <button type="submit" className={`${styles.actionBtn} ${styles.actionBtnConfirm}`}>
-                              Hoàn thành ✔️
+                              <span className={styles.inlineIcon}>
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                              </span>
+                              Hoàn thành
                             </button>
                           </form>
                         )}
@@ -196,6 +216,9 @@ export default async function AdminOrdersPage() {
                             }}
                           >
                             <button type="submit" className={`${styles.actionBtn} ${styles.actionBtnCancel}`}>
+                              <span className={styles.inlineIcon}>
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                              </span>
                               Hủy
                             </button>
                           </form>

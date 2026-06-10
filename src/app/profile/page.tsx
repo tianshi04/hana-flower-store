@@ -81,8 +81,9 @@ export default async function ProfilePage({ searchParams }: PageProps) {
 
       {/* 1. Success Order Placement Banner */}
       {isSuccessCheckout && (
-        <div className={styles.successBanner}>
-          <span>🎉</span> Đặt hàng thành công! Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận từ nhân viên cửa hàng.
+        <div className={styles.successBanner} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+          Đặt hàng thành công! Đơn hàng của bạn đã được tiếp nhận và đang chờ xác nhận từ nhân viên cửa hàng.
         </div>
       )}
 
@@ -155,7 +156,10 @@ export default async function ProfilePage({ searchParams }: PageProps) {
 
                     {order.cardTitle && (
                       <div className={styles.cardMessageBlock}>
-                        <p><strong>💌 {order.cardTitle}:</strong></p>
+                        <p style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+                          <strong>{order.cardTitle}:</strong>
+                        </p>
                         <p>"{order.cardMessage}"</p>
                       </div>
                     )}
@@ -168,8 +172,9 @@ export default async function ProfilePage({ searchParams }: PageProps) {
       ) : (
         <div className={styles.noOrders}>
           <p style={{ fontSize: "1.1rem", marginBottom: "16px" }}>Bạn chưa đặt đơn hàng nào.</p>
-          <Link href="/products" className="btn btn-primary">
-            Khám phá các mẫu hoa tươi nghệ thuật ngay 💐
+          <Link href="/products" className="btn btn-primary" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            Khám phá các mẫu hoa tươi nghệ thuật ngay
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" /></svg>
           </Link>
         </div>
       )}

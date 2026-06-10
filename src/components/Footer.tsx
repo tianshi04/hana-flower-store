@@ -1,16 +1,31 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} id="lien-he">
       <div className={styles.container}>
         <div className={styles.brandCol}>
           <div className={styles.logo}>
-            <span>🌸</span>
-            <span className="serif-title">FlowerDang</span>
+            <span className={styles.logoIcon}>
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block" }}>
+                <path d="M12 10c2-3.5 5-2 5-2s.5 2.5-1.5 4.5-3.5 1.5-3.5 1.5-1.5.5-3.5-1.5S7 8 7 8s3-1.5 5 2z" />
+                <path d="M12 14v7" />
+                <path d="M12 17c-2 0-3-1-3-1" />
+                <path d="M12 19c2 0 3-1 3-1" />
+              </svg>
+            </span>
+            <span className={styles.logoText}>HanaShop</span>
           </div>
           <p className={styles.description}>
             Cung cấp các sản phẩm hoa tươi nghệ thuật thiết kế độc quyền, mang thông điệp yêu thương và trọn vẹn cảm xúc tới người nhận trong mọi dịp đặc biệt.
@@ -67,17 +82,17 @@ export default function Footer() {
         <div>
           <h3 className={styles.title}>Liên hệ</h3>
           <div className={styles.contactInfo}>
-            <p>📍 Địa chỉ: 123 Đường Láng, Đống Đa, Hà Nội</p>
-            <p>📞 Hotline: 1900 8888</p>
-            <p>✉️ Email: contact@flowerdang.com</p>
-            <p>🕒 Giờ làm việc: 7:00 - 21:00 (Tất cả các ngày)</p>
+            <p>Địa chỉ: 123 Đường Láng, Đống Đa, Hà Nội</p>
+            <p>Hotline: 1900 8888</p>
+            <p>Email: contact@hanashop.com</p>
+            <p>Giờ làm việc: 7:00 - 21:00 (Tất cả các ngày)</p>
           </div>
         </div>
       </div>
 
       <div className={styles.bottom}>
         <div className={styles.copy}>
-          &copy; {currentYear} FlowerDang. Thiết kế cao cấp cho ngày đặc biệt.
+          &copy; {currentYear} HanaShop. Thiết kế cao cấp cho ngày đặc biệt.
         </div>
         <div className={styles.paymentIcons}>
           <span className={styles.paymentBadge}>VNPay Online</span>

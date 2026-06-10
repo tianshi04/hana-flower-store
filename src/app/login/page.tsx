@@ -81,7 +81,7 @@ export default function LoginPage() {
             disabled={isSubmitting}
             style={{ width: "100%" }}
           >
-            {isSubmitting ? "Đang đăng nhập..." : "Đăng Nhập 🔑"}
+            {isSubmitting ? "Đang đăng nhập..." : "Đăng Nhập"}
           </button>
         </form>
 
@@ -89,13 +89,13 @@ export default function LoginPage() {
         <div className={styles.demoInfo}>
           <span className={styles.demoTitle}>Tài khoản thử nghiệm (Demo Accounts):</span>
           <p>
-            <strong>👤 Khách hàng:</strong> customer@flowerdang.com <br />
-            <strong>🔑 Mật khẩu:</strong> customerpassword
+            <strong>Khách hàng:</strong> customer@flowerdang.com <br />
+            <strong>Mật khẩu:</strong> customerpassword
           </p>
           <div style={{ height: "1px", backgroundColor: "var(--card-border)", margin: "4px 0" }} />
           <p>
-            <strong>🛡️ Admin Shop:</strong> admin@flowerdang.com <br />
-            <strong>🔑 Mật khẩu:</strong> adminpassword
+            <strong>Admin Shop:</strong> admin@flowerdang.com <br />
+            <strong>Mật khẩu:</strong> adminpassword
           </p>
         </div>
       </div>
