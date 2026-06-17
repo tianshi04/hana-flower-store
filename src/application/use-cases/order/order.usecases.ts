@@ -138,6 +138,7 @@ export class HandleVNPayCallbackUseCase {
     if (!order) {
       return {
         success: false,
+        orderId,
         message: "Không tìm thấy đơn hàng tương ứng trong hệ thống.",
       };
     }
@@ -162,6 +163,7 @@ export class HandleVNPayCallbackUseCase {
       await this.orderRepo.cancelAndRevertStock(orderId, order.items);
       return {
         success: false,
+        orderId,
         message: `Thanh toán không thành công hoặc bị hủy. Mã phản hồi: ${verifyResult.responseCode}`,
       };
     }
