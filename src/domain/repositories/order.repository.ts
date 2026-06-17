@@ -46,7 +46,7 @@ export type AdminOrderWithDetails = Prisma.OrderGetPayload<{
 
 export interface OrderRepository {
   findById(id: string): Promise<(Order & { items: OrderItem[] }) | null>;
-  findBydWithDetails(id: string): Promise<OrderWithDetails | null>;
+  findByIdWithDetails(id: string): Promise<OrderWithDetails | null>;
   findByUserId(userId: string): Promise<OrderWithDetails[]>;
   findManyWithUsersAndItems(): Promise<AdminOrderWithDetails[]>;
   createWithStockReduction(orderData: CreateOrderInput, items: CreateOrderItemInput[]): Promise<Order>;
