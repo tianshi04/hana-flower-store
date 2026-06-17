@@ -6,6 +6,7 @@ import { OrderStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { PrismaOrderRepository } from "@/infrastructure/repositories/prisma-order.repository";
 import { PrismaProductRepository } from "@/infrastructure/repositories/prisma-product.repository";
 import { VNPayPaymentService } from "@/infrastructure/services/vnpay-payment.service";
+import { db } from "@/lib/db";
 import {
   CreateOrderUseCase,
   HandleVNPayCallbackUseCase,
@@ -44,6 +45,12 @@ export async function createOrder(input: CreateOrderInput, ipAddress: string = "
   }
   const userId = session.user.id;
 
+  // Check if user exists in database to prevent foreign key constraint violations (e.g. after db seed)
+  const userExists = await db.user.findUnique({ where: { id: userId } });
+  if (!userExists) {
+    throw new Error("Tài khoản của bạn đã hết hạn hoặc không tồn tại trên hệ thống. Vui lòng đăng xuất và đăng nhập lại.");
+  }
+
   const useCase = new CreateOrderUseCase(orderRepo, productRepo, paymentService);
   const result = await useCase.execute({
     userId,
@@ -68,9 +75,6 @@ export async function createOrder(input: CreateOrderInput, ipAddress: string = "
 export async function handleVNPayCallback(queryParams: Record<string, string>) {
   const useCase = new HandleVNPayCallbackUseCase(orderRepo, paymentService);
   const result = await useCase.execute(queryParams);
-
-  revalidatePath("/profile");
-  revalidatePath("/admin/orders");
 
   return result;
 }
