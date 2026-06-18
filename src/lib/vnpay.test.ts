@@ -17,7 +17,7 @@ describe("VNPay Payment Utility Tests", () => {
 
     const parsedUrl = new URL(url);
     expect(parsedUrl.searchParams.get("vnp_Command")).toBe("pay");
-    expect(parsedUrl.searchParams.get("vnp_TmnCode")).toBe("2QXG2Y51");
+    expect(parsedUrl.searchParams.get("vnp_TmnCode")).toBe(process.env.VNP_TMNCODE || "2QXG2Y51");
     expect(parsedUrl.searchParams.get("vnp_TxnRef")).toBe(mockConfig.orderId);
     expect(parsedUrl.searchParams.get("vnp_Amount")).toBe("15000000"); // 150000 * 100
     expect(parsedUrl.searchParams.get("vnp_SecureHash")).not.toBeNull();
@@ -66,7 +66,7 @@ describe("VNPay Payment Utility Tests", () => {
       signData.append(key, testParams[key]);
     }
     const crypto = require("crypto");
-    const hmac = crypto.createHmac("sha512", "GET_YOURS_FROM_VNPAY");
+    const hmac = crypto.createHmac("sha512", process.env.VNP_HASHSECRET || "GET_YOURS_FROM_VNPAY");
     const testHash = hmac.update(Buffer.from(signData.toString(), "utf-8")).digest("hex");
 
     const payload = {

@@ -25,6 +25,7 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(PaymentMethod.COD);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,11 +35,11 @@ export default function CheckoutPage() {
       setDeliveryTime(firstItem.deliveryTime || "");
       setCardTitle(firstItem.cardTitle || "");
       setCardMessage(firstItem.cardMessage || "");
-    } else {
-      // Redirect to cart if empty
+    } else if (!isSubmitting && !paymentUrl) {
+      // Redirect to cart if empty and not in submission/redirecting state
       router.push("/cart");
     }
-  }, [cart, router]);
+  }, [cart, router, isSubmitting, paymentUrl]);
 
   const formatVND = (value: number) => {
     return new Intl.NumberFormat("vi-VN", {
@@ -77,6 +78,7 @@ export default function CheckoutPage() {
 
         // 2. Direct browser depending on payment method
         if (result.paymentMethod === PaymentMethod.VNPAY && result.paymentUrl) {
+          setPaymentUrl(result.paymentUrl);
           // Redirect to VNPay portal
           window.location.href = result.paymentUrl;
         } else {
@@ -87,10 +89,27 @@ export default function CheckoutPage() {
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Đã xảy ra lỗi trong quá trình xử lý đơn hàng. Vui lòng thử lại.");
-    } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (paymentUrl) {
+    return (
+      <div className={styles.redirectWrapper}>
+        <div className={styles.redirectCard}>
+          <div className={styles.spinner}></div>
+          <h2 className="serif-title">Đơn Hàng Đã Được Khởi Tạo</h2>
+          <p>Hệ thống đang chuyển hướng bạn đến cổng thanh toán bảo mật VNPay...</p>
+          <a href={paymentUrl} className="btn btn-primary" style={{ marginTop: "16px", display: "inline-block" }}>
+            Đi tới trang thanh toán VNPay 💳
+          </a>
+          <p className={styles.redirectNotice}>
+            Nếu trình duyệt không tự động chuyển hướng, vui lòng nhấp vào nút phía trên.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return <div className={styles.wrapper}><p>Đang tải giỏ hàng...</p></div>;
