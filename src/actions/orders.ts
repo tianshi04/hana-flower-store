@@ -6,6 +6,7 @@ import { OrderStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { PrismaOrderRepository } from "@/infrastructure/repositories/prisma-order.repository";
 import { PrismaProductRepository } from "@/infrastructure/repositories/prisma-product.repository";
 import { VNPayPaymentService } from "@/infrastructure/services/vnpay-payment.service";
+import { pinoLogger } from "@/infrastructure/logging/pino-logger";
 import { db } from "@/lib/db";
 import {
   CreateOrderUseCase,
@@ -51,7 +52,7 @@ export async function createOrder(input: CreateOrderInput, ipAddress: string = "
     throw new Error("Tài khoản của bạn đã hết hạn hoặc không tồn tại trên hệ thống. Vui lòng đăng xuất và đăng nhập lại.");
   }
 
-  const useCase = new CreateOrderUseCase(orderRepo, productRepo, paymentService);
+  const useCase = new CreateOrderUseCase(orderRepo, productRepo, paymentService, pinoLogger);
   const result = await useCase.execute({
     userId,
     recipientName: input.recipientName,

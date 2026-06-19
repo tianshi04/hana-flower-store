@@ -1,6 +1,7 @@
 import { OrderRepository, CreateOrderInput, CreateOrderItemInput } from "@/domain/repositories/order.repository";
 import { ProductRepository } from "@/domain/repositories/product.repository";
 import { PaymentService } from "@/domain/services/payment.service";
+import { ILogger } from "@/domain/services/logger.service";
 import { PaymentMethod, PaymentStatus, OrderStatus } from "@prisma/client";
 
 interface CreateOrderUseCaseInput {
@@ -21,10 +22,17 @@ export class CreateOrderUseCase {
   constructor(
     private orderRepo: OrderRepository,
     private productRepo: ProductRepository,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private logger: ILogger
   ) {}
 
   async execute(input: CreateOrderUseCaseInput) {
+    this.logger.info("Create order requested", {
+      userId: input.userId,
+      itemCount: input.items.length,
+      paymentMethod: input.paymentMethod,
+    });
+
     if (input.items.length === 0) {
       throw new Error("Your cart is empty.");
     }
@@ -58,6 +66,12 @@ export class CreateOrderUseCase {
       }
 
       if (product.stock < item.quantity) {
+        this.logger.warn("Insufficient stock", {
+          productId: product.id,
+          productName: product.name,
+          requested: item.quantity,
+          available: product.stock,
+        });
         throw new Error(`Sản phẩm "${product.name}" không đủ hàng trong kho (Còn lại: ${product.stock}).`);
       }
 
@@ -90,6 +104,13 @@ export class CreateOrderUseCase {
     };
 
     const order = await this.orderRepo.createWithStockReduction(orderData, orderItemsData);
+
+    this.logger.info("Order created", {
+      orderId: order.id,
+      userId: input.userId,
+      totalPrice,
+      paymentMethod: input.paymentMethod,
+    });
 
     // 3. Return payment info or confirmation info
     if (input.paymentMethod === PaymentMethod.VNPAY) {
