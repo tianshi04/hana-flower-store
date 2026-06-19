@@ -101,7 +101,7 @@ export default function CheckoutPage() {
           <h2 className="serif-title">Đơn Hàng Đã Được Khởi Tạo</h2>
           <p>Hệ thống đang chuyển hướng bạn đến cổng thanh toán bảo mật VNPay...</p>
           <a href={paymentUrl} className="btn btn-primary" style={{ marginTop: "16px", display: "inline-block" }}>
-            Đi tới trang thanh toán VNPay 💳
+            Đi tới trang thanh toán VNPay
           </a>
           <p className={styles.redirectNotice}>
             Nếu trình duyệt không tự động chuyển hướng, vui lòng nhấp vào nút phía trên.
