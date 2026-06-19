@@ -1,5 +1,7 @@
 # FlowerDang - Cửa Hàng Hoa Tươi Thiết Kế Nghệ Thuật (Next.js Fullstack)
 
+![alt text](docs/img/image.png)
+
 Dự án Website thương mại điện tử chuyên biệt cho ngành hoa tươi nghệ thuật được xây dựng bằng Next.js (App Router), PostgreSQL, Prisma ORM, Auth.js (NextAuth v5), CSS Modules và hệ thống kiểm thử tự động tích hợp Docker (Testcontainers).
 
 ---
