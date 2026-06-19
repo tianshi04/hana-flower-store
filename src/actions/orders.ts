@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { OrderStatus, PaymentMethod, PaymentStatus } from "@prisma/client";
 import { PrismaOrderRepository } from "@/infrastructure/repositories/prisma-order.repository";
 import { PrismaProductRepository } from "@/infrastructure/repositories/prisma-product.repository";
-import { VNPayPaymentService } from "@/infrastructure/services/vnpay-payment.service";
+import { PaymentServiceFactory } from "@/infrastructure/services/payment-service.factory";
 import { db } from "@/lib/db";
 import {
   CreateOrderUseCase,
@@ -19,7 +19,7 @@ import {
 
 const orderRepo = new PrismaOrderRepository();
 const productRepo = new PrismaProductRepository();
-const paymentService = new VNPayPaymentService();
+
 
 interface OrderItemInput {
   productId: string;
@@ -51,6 +51,7 @@ export async function createOrder(input: CreateOrderInput, ipAddress: string = "
     throw new Error("Tài khoản của bạn đã hết hạn hoặc không tồn tại trên hệ thống. Vui lòng đăng xuất và đăng nhập lại.");
   }
 
+  const paymentService = PaymentServiceFactory.create(input.paymentMethod);
   const useCase = new CreateOrderUseCase(orderRepo, productRepo, paymentService);
   const result = await useCase.execute({
     userId,
@@ -73,6 +74,7 @@ export async function createOrder(input: CreateOrderInput, ipAddress: string = "
 }
 
 export async function handleVNPayCallback(queryParams: Record<string, string>) {
+  const paymentService = PaymentServiceFactory.create(PaymentMethod.VNPAY);
   const useCase = new HandleVNPayCallbackUseCase(orderRepo, paymentService);
   const result = await useCase.execute(queryParams);
 
